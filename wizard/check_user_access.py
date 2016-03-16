@@ -88,7 +88,7 @@ class check_user_access(osv.TransientModel):
                 rules = {}
                 for mode in modes:
                     rights[mode] = ir_model_access_obj.check(cr, wizard.user_id.id, ir_model.model, mode, False, context)
-                    rules[mode] = ir_rule_obj.domain_get(cr, wizard.user_id.id, ir_model.model, mode='read', context=context)
+                    rules[mode] = ir_rule_obj.domain_get(cr, wizard.user_id.id, ir_model.model, mode=mode, context=context)
 
                     if rules[mode][0] or rules[mode][1]:
                         where = ' AND '.join(rules[mode][0])
