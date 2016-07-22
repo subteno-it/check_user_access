@@ -25,7 +25,7 @@
 
 from openerp.osv import osv, fields
 from openerp import SUPERUSER_ID
-from tools.translate import _
+from openerp.tools.translate import _
 
 
 class check_user_access(osv.TransientModel):
