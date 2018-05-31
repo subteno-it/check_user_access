@@ -1,108 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<openerp>
-    <data>
-        ##############################################################################
-        #
-        #    eurogerm_profile module for OpenERP, Agro-Business Specific extensions
-        #    Copyright (C) 2012 SYLEAM Info Services ([http://www.syleam.fr/]) 
-        #              Sebastien LANGE [sebastien.lange@syleam.fr]
-        #
-        #    This file is a part of eurogerm_profile
-        #
-        #    eurogerm_profile is free software: you can redistribute it and/or modify
-        #    it under the terms of the GNU Affero General Public License as published by
-        #    the Free Software Foundation, either version 3 of the License, or
-        #    (at your option) any later version.
-        #
-        #    eurogerm_profile is distributed in the hope that it will be useful,
-        #    but WITHOUT ANY WARRANTY; without even the implied warranty of
-        #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-        #    GNU Affero General Public License for more details.
-        #
-        #    You should have received a copy of the GNU Affero General Public License
-        #    along with this program.  If not, see [http://www.gnu.org/licenses/].
-        #
-        ##############################################################################
-
-        <record id="view_check_user_access_form" model="ir.ui.view">
-            <field name="name">check.user.access.form</field>
-            <field name="model">check.user.access</field>
-            <field name="priority" eval="8"/>
-            <field name="arch" type="xml">
-                <form string="Check User Access">
-                    <group  col="8" colspan="4">
-                        <field name="user_id"/>
-                        <button string="Compute" icon="gtk-execute" type="object" name="compute_check_user_access"/>
-                    </group>
-                    <newline/>
-                    <group colspan="4">
-                        <notebook colspan="4">
-                            <page string="Models">
-                                <field name="model_ids" colspan="4" nolabel="1"/>
-                            </page>
-                            <page string="Rights">
-                                <field name="check_user_right_ids" colspan="4" nolabel="1" height="500">
-                                    <tree string="Rights">
+<!--
+    Copyright 2017 Syleam
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+    <record id="view_check_user_access_form" model="ir.ui.view">
+        <field name="model">check.user.access</field>
+        <field name="arch" type="xml">
+            <form string="Check User Access">
+                <group>
+                    <field name="user_id"/>
+                    <button string="Compute" type="object" name="compute_check_user_access"/>
+                </group>
+                <group>
+                    <notebook>
+                        <page string="Models">
+                            <field name="model_ids" nolabel="1"/>
+                        </page>
+                        <page string="Rights">
+                            <field name="check_user_right_ids" nolabel="1">
+                                <tree string="Rights">
+                                    <field name="model"/>
+                                    <field name="perm_read"/>
+                                    <field name="perm_create"/>
+                                    <field name="perm_write"/>
+                                    <field name="perm_unlink"/>
+                                    <field name="ir_model_id"/>
+                                </tree>
+                                <form string="Rights">
+                                    <group>
                                         <field name="model"/>
+                                        <field name="ir_model_id"/>
+                                    </group>
+                                    <separator string="Access" colspan="4"/>
+                                    <group>
                                         <field name="perm_read"/>
-                                        <field name="perm_create"/>
                                         <field name="perm_write"/>
+                                        <field name="perm_create"/>
                                         <field name="perm_unlink"/>
-                                        <field name="ir_model_id"/>
-                                    </tree>
-                                    <form string="Rights">
-                                        <group col="6" colspan="4">
-                                            <field name="model"/>
-                                            <field name="ir_model_id"/>
-                                        </group>
-                                        <separator string="Access" colspan="4"/>
-                                        <group col="4" colspan="4">
-                                            <field name="perm_read"/>
-                                            <field name="perm_write"/>
-                                            <field name="perm_create"/>
-                                            <field name="perm_unlink"/>
-                                        </group>
-                                    </form>
-                                </field>
-                            </page>
-                            <page string="Rules">
-                                <field name="check_user_rule_ids" colspan="4" nolabel="1" height="500">
-                                    <tree string="Rules">
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                        <page string="Rules">
+                            <field name="check_user_rule_ids" nolabel="1">
+                                <tree string="Rules">
+                                    <field name="model"/>
+                                    <field name="mode"/>
+                                    <field name="rule"/>
+                                    <field name="ir_model_id"/>
+                                </tree>
+                                <form string="Rules">
+                                    <group>
                                         <field name="model"/>
-                                        <field name="mode"/>
-                                        <field name="rule"/>
                                         <field name="ir_model_id"/>
-                                    </tree>
-                                    <form string="Rules">
-                                        <group col="6" colspan="4">
-                                            <field name="model"/>
-                                            <field name="ir_model_id"/>
-                                        </group>
-                                        <separator string="Access" colspan="4"/>
-                                        <field name="rule" colspan="4" nolabel="1"/>
-                                    </form>
-                                </field>
-                            </page>
-                        </notebook>
-                    </group>
-                </form>
-            </field>
-        </record>
-        <record model="ir.actions.act_window" id="act_open_check_user_access_view">
-            <field name="name">Check user Access</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">check.user.access</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">form</field>
-            <field name="domain">[]</field>
-            <field name="context">{}</field>
-        </record>
-        <record model="ir.actions.act_window.view" id="act_open_check_user_access_view_form">
-            <field name="act_window_id" ref="act_open_check_user_access_view"/>
-            <field name="sequence" eval="20"/>
-            <field name="view_mode">form</field>
-            <field name="view_id" ref="view_check_user_access_form"/>
-        </record>
-        <menuitem id="menu_check_user_access" parent="base.menu_security" sequence="20" action="act_open_check_user_access_view"/>
-    </data>
-</openerp>
+                                    </group>
+                                    <separator string="Access"/>
+                                    <field name="rule" nolabel="1"/>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="act_open_check_user_access_view">
+        <field name="name">Check user Access</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">check.user.access</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+    <record model="ir.actions.act_window.view" id="act_open_check_user_access_view_form">
+        <field name="act_window_id" ref="act_open_check_user_access_view"/>
+        <field name="sequence" eval="20"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_check_user_access_form"/>
+    </record>
+    <menuitem id="menu_check_user_access" parent="base.menu_security" sequence="20" action="act_open_check_user_access_view"/>
+</odoo>
